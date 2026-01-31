@@ -1,23 +1,31 @@
+# conftest.py
 import pytest
 from selenium import webdriver
 from selene import browser
 import os
 
+from selenium.webdriver.chrome.options import Options
+
 
 @pytest.fixture(scope='function', autouse=True)
-def browser_management():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--headless")
-    options.add_argument(f"--user-data-dir=/tmp/chrome_user_data_{os.getpid()}")
+def setup_browser():
+    options = Options()
 
-    browser.config.driver_options = options
-    browser.config.driver_name = "chrome"
-    browser.config.base_url = "https://github.com"
-    browser.config.timeout = 10
+    capabilities = {
+        "browserName": "chrome",
+        "browserVersion": "127.0",
+        "selenoid:options": {
+            "enableVideo": True,
+            "enableVNC": True
+
+        }
+    }
+
+    driver = webdriver.Remote(
+        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        options=options)
 
     yield
 
-    browser.quit()
+    if browser.driver:
+        browser.quit()
