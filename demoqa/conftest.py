@@ -20,6 +20,8 @@ def setup_browser(request):
         command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
 
+    browser.config.driver = driver
+
 
     yield browser
-    driver.quit()
+    browser.quit()
