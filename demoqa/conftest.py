@@ -5,7 +5,7 @@ from selene import Browser, Config, browser
 from selenium.webdriver.chrome.options import Options
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope='function')
 def setup_browser(request):
     options = Options()
 
@@ -20,6 +20,6 @@ def setup_browser(request):
         command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
 
-
-    yield browser
+    browser_instance = Browser(Config(driver))
+    yield browser_instance
     driver.quit()
