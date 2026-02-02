@@ -1,8 +1,12 @@
 # conftest.py
 import pytest
+
+
 from selenium import webdriver
 from selene import Browser, Config, browser
 from selenium.webdriver.chrome.options import Options
+
+from utils import attach
 
 
 @pytest.fixture(scope='function')
@@ -24,4 +28,10 @@ def setup_browser(request):
 
 
     yield browser
+
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_html(browser)
+
+
     browser.quit()
