@@ -10,7 +10,7 @@ def setup_browser(request):
     options = Options()
 
     options.set_capability("browserName", "chrome")
-    options.set_capability("browserVersion", "128.0")
+    options.set_capability("browserVersion", "127.0")
     options.set_capability("selenoid:options", {
         "enableVNC": True,
         "enableVideo": True
@@ -20,6 +20,6 @@ def setup_browser(request):
         command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
 
-    browser_instance = Browser(Config(driver))
-    yield browser_instance
+
+    yield browser
     driver.quit()
