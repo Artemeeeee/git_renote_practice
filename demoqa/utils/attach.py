@@ -8,8 +8,11 @@ def add_screenshot(browser):
 
 
 def add_logs(browser):
-    log = "".join(f'{text}\n' for text in browser.driver.get_log(log_type='browser'))
-    allure.attach(log, 'browser_logs', AttachmentType.TEXT, '.log')
+    try:
+        # Для Selenium 4+ нужно использовать execute_script для получения логов
+        log = browser.driver.execute_script("return window.performance.getEntries();")
+        allure.attach(body=str(log), name='browser_logs',
+                      attachment_type=AttachmentType.TEXT, extension='.log')
 
 
 def add_html(browser):
