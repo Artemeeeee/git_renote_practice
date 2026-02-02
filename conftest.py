@@ -1,17 +1,14 @@
 # conftest.py
 import pytest
 from selenium import webdriver
-from selene import browser
-import os
-
+from selene import Browser, Config
 from selenium.webdriver.chrome.options import Options
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope='function')
 def setup_browser():
     options = Options()
-
-    capabilities = {
+    selenoid_capabilities = {
         "browserName": "chrome",
         "browserVersion": "127.0",
         "selenoid:options": {
@@ -25,7 +22,5 @@ def setup_browser():
         command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
 
-    yield
-
-    if browser.driver:
-        browser.quit()
+    browser = Browser(Config(driver))
+    yield browser
