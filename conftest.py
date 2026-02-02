@@ -5,10 +5,10 @@ from selene import Browser, Config
 from selenium.webdriver.chrome.options import Options
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='function', autouse=True)
 def setup_browser():
     options = Options()
-    selenoid_capabilities = {
+    capabilities = {
         "browserName": "chrome",
         "browserVersion": "127.0",
         "selenoid:options": {
@@ -24,3 +24,4 @@ def setup_browser():
 
     browser = Browser(Config(driver))
     yield browser
+

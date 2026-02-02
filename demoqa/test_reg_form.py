@@ -4,7 +4,7 @@ from selene import browser, by, have, command
 
 
 @allure.title("Заполнение регистрационной формы DemoQA")
-def test_form_fill(setup_browser):
+def test_form_fill():
     with allure.step("Заполнить все поля формы"):
         browser.open('https://demoqa.com/automation-practice-form')
 
