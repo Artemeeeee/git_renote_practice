@@ -7,19 +7,13 @@ def add_screenshot(browser):
     allure.attach(body=png, name='screenshot', attachment_type=AttachmentType.PNG, extension='.png')
 
 
-def add_logs(browser):
-    # Простая безопасная версия без JavaScript
+def add_logs(driver):
     try:
-        # Попробуем получить логи через DevTools Protocol (для Chrome)
-        logs = browser.driver.get_log('browser')
-        log_text = "\n".join(str(log) for log in logs)
-        allure.attach(body=log_text, name='browser_logs',
-                      attachment_type=AttachmentType.TEXT, extension='.log')
-    except:
-        # Если не получается, просто пишем сообщение
-        allure.attach(body="Browser logs unavailable (CORS or Selenium 4+ issue)",
-                      name='browser_logs',
-                      attachment_type=AttachmentType.TEXT, extension='.log')
+        logs = driver.get_log('browser')
+        text = "\n".join([f"{l['level']}: {l['message']}" for l in logs])
+        allure.attach(text, "browser_logs", AttachmentType.TEXT, ".log")
+    except Exception:
+        pass
 
 
 def add_html(browser):
