@@ -1,5 +1,6 @@
 import allure
 from allure_commons.types import AttachmentType
+from selene import browser
 
 
 def add_screenshot(browser):
@@ -8,12 +9,8 @@ def add_screenshot(browser):
 
 
 def add_logs(browser):
-    try:
-        logs = browser.get_log('browser')
-        text = "\n".join([f"{l['level']}: {l['message']}" for l in logs])
-        allure.attach(text, "browser_logs", AttachmentType.TEXT, ".log")
-    except Exception:
-        pass
+    log = "".join(f'{text}\n' for text in browser.driver.execute("getLog", {'type': 'browser'})['value'])
+    allure.attach(log, 'browser_logs', AttachmentType.TEXT, '.log')
 
 
 def add_html(browser):
