@@ -5,9 +5,10 @@ import pytest
 from selenium import webdriver
 from selene import browser
 from selenium.webdriver.chrome.options import Options
-
 from utils import attach
 
+
+DEFAULT_BROWSER_VERSION = '127.0'
 def pytest_addoption(parser):
     parser.addoption(
         "--browser_version",
@@ -18,6 +19,7 @@ def pytest_addoption(parser):
 @pytest.fixture(scope='function')
 def setup_browser(request):
     browser_version = request.config.getoption("--browser_version")
+    browser_version = browser_version if browser_version != '' else DEFAULT_BROWSER_VERSION
     options = Options()
 
     options.set_capability("browserName", 'chrome')
