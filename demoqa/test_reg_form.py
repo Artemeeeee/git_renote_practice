@@ -7,7 +7,11 @@ from selene import browser, by, have, command
 def test_form_fill(setup_browser):
     browser = setup_browser
     with allure.step("Заполнить все поля формы"):
-        browser.open('https://demoqa.com/automation-practice-form')
+        browser.open('https://demoqa.com/')
+
+        #ищем форму
+        browser.element("//*[contains(text(), 'Forms')]").click()
+        browser.element("//span[text()='Practice Form']").click()
 
         # Персональные данные
         browser.element('#firstName').type('Artem')
