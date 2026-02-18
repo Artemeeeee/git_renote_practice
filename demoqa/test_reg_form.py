@@ -20,6 +20,9 @@ def test_form_fill(setup_browser):
         browser.element(by.text('Male')).click()
         browser.element('#userNumber').type('1234567890')
 
+        #скроллим вниз
+        browser.execute_script("window.scrollBy(0, 500)")
+
         # Дата рождения
         browser.element('#dateOfBirthInput').click()
         browser.element('.react-datepicker__year-select').click().element(by.text('2003')).click()
